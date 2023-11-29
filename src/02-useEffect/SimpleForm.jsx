@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Message } from './Message';
 
 export const SimpleForm = () => {
 	const [formState, setFormState] = useState({
@@ -13,21 +14,22 @@ export const SimpleForm = () => {
 		const { name, value } = target;
 
 		setFormState({
+			// Utilizamos el spread operator para no modificar el objeto original
 			...formState,
 			[name]: value,
 		});
 	};
 
 	useEffect(() => {
-		console.log('useEffect called');
+		//console.log('useEffect called');
 	}, []);
 
 	useEffect(() => {
-		console.log('formState changed!');
+		//console.log('formState changed!');
 	}, [formState]);
 
 	useEffect(() => {
-		console.log('email changed!');
+		//console.log('email changed!');
 	}, [email]);
 
 	return (
@@ -51,6 +53,8 @@ export const SimpleForm = () => {
 				value={email}
 				onChange={onInputChange}
 			/>
+
+			{username === 'Dnmlss2' && <Message />}
 		</>
 	);
 };
