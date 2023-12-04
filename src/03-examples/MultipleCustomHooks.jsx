@@ -1,10 +1,10 @@
-import { useFetch } from '../hooks/useFetch';
+import { useCounter, useFetch } from '../hooks';
+import { Characters, LoadingCharacter } from './';
 
 export const MultipleCustomHooks = () => {
-	const { data, isLoading, hasError } = useFetch('https://rickandmortyapi.com/api/character/424');
-
-	const { id, name, status, species, image } = !!data && data;
-	//console.log(id, name);
+	const { increment, reset, decrement, url } = useCounter();
+	const { data, isLoading, hasError } = useFetch(url);
+	const { id, image, name, species, status, location } = data || {};
 
 	return (
 		<>
@@ -13,23 +13,46 @@ export const MultipleCustomHooks = () => {
 
 			{/* condicional ternaria */}
 			{isLoading ? (
-				<div className='alert alert-info text-center'>Loading...</div>
+				<LoadingCharacter />
 			) : (
-				<div
-					className='card mx-auto border rounded'
-					style={{ maxWidth: '400px', backgroundColor: '#F8F9FA' }}
-				>
-					<img className='card-img-top' src={image} alt={name} />
-					<div className='card-body text-center'>
-						<h3 className='card-title mb-1'>Name: {name}</h3>
-						<h4 className='card-text'>Species: {species}</h4>
-						<h5 className='card-text'>Status: {status}</h5>
-					</div>
-					<footer className='card-footer text-muted text-end small footer'>
-						By: Dnmlss
-					</footer>
-				</div>
+				<Characters
+					image={image}
+					name={name}
+					species={species}
+					status={status}
+					location={location}
+				/>
 			)}
+
+			<div
+				className='d-flex justify-content-center align-items-center mt-2'
+				role='group'
+				disabled={isLoading}
+			>
+				<button
+					onClick={() => decrement()}
+					className='btn btn-primary'
+					disabled={isLoading}
+				>
+					Back
+				</button>
+
+				<button
+					onClick={() => reset()}
+					className='btn btn-primary'
+					style={{ width: 'auto', height: 'auto' }}
+				>
+					Reset
+				</button>
+
+				<button
+					onClick={() => increment()}
+					className='btn btn-primary'
+					style={{ width: 'auto', height: 'auto' }}
+				>
+					Next
+				</button>
+			</div>
 		</>
 	);
 };
