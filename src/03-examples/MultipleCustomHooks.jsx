@@ -1,10 +1,10 @@
 import { useCounter, useFetch } from '../hooks';
-import { Characters, LoadingCharacter } from './';
+import { Characters, LoadingCharacter, SearchCharacter } from './';
 
 export const MultipleCustomHooks = () => {
-	const { increment, reset, decrement, url } = useCounter();
+	const { increment, reset, decrement, url, setCounter } = useCounter();
 	const { data, isLoading, hasError } = useFetch(url);
-	const { id, image, name, species, status, location } = data || {};
+	const { image, name, species, status, location, origin, episode } = !!data && data;
 
 	return (
 		<>
@@ -21,6 +21,9 @@ export const MultipleCustomHooks = () => {
 					species={species}
 					status={status}
 					location={location}
+					origin={origin}
+					episode={episode}
+					hasError={hasError}
 				/>
 			)}
 
@@ -37,22 +40,23 @@ export const MultipleCustomHooks = () => {
 					Back
 				</button>
 
-				<button
-					onClick={() => reset()}
-					className='btn btn-primary'
-					style={{ width: 'auto', height: 'auto' }}
-				>
+				<button onClick={() => reset()} className='btn btn-primary' disabled={isLoading}>
 					Reset
 				</button>
 
 				<button
 					onClick={() => increment()}
 					className='btn btn-primary'
-					style={{ width: 'auto', height: 'auto' }}
+					disabled={isLoading}
 				>
 					Next
 				</button>
 			</div>
+
+			<SearchCharacter setCounter={setCounter} />
+			<hr />
+
+			<footer className='card-footer text-muted text-end small footer'>By: Dnmlss®</footer>
 		</>
 	);
 };

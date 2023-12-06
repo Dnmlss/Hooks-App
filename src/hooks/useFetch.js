@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 // pedimos el url
-export const useFetch = (url) => {
+export const useFetch = (url, id) => {
 	//Creamos la lógica como un hook
 	const [state, setState] = useState({
 		data: null,
@@ -16,16 +16,33 @@ export const useFetch = (url) => {
 			isLoading: true,
 		});
 
-		const resp = await fetch(url);
-		const data = await resp.json();
-		console.log(data);
+		try {
+			const resp = await fetch(url);
+			const data = await resp.json();
+			//console.log(data.episode.length);
 
-		// Al tener los datos, enviamos todas las propiedades al setState
-		setState({
-			data,
-			isLoading: false,
-			hasError: null,
-		});
+			if (data.error) {
+				setState({
+					data: null,
+					isLoading: false,
+					hasError: data.error,
+				});
+			} else {
+				// Al tener los datos, enviamos todas las propiedades al setState
+				setState({
+					data,
+					isLoading: false,
+					hasError: null,
+				});
+			}
+		} catch (error) {
+			console.log('El error es:' + error);
+			setState({
+				data: null,
+				isLoading: false,
+				hasError: error,
+			});
+		}
 	};
 
 	// disparamos useEffect

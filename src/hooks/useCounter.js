@@ -9,6 +9,7 @@ export const useCounter = (initialValue = 1) => {
 	};
 
 	const decrement = (value = 1) => {
+		// evitamos que sea menor a 0
 		if (counter <= 0) return;
 		setCounter(counter - value);
 	};
@@ -19,6 +20,7 @@ export const useCounter = (initialValue = 1) => {
 
 	return {
 		counter,
+		setCounter,
 		increment,
 		decrement,
 		reset,
