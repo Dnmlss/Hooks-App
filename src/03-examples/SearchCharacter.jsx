@@ -19,7 +19,7 @@ export const SearchCharacter = ({ setCounter }) => {
 	useEffect(() => {
 		//console.log('useEffect called!!');
 	}, []);
-
+	s;
 	useEffect(() => {
 		//console.log('formState changed!!');
 	}, [searchId]);
