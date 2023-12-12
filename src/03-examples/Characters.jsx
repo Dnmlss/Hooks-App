@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 export const Characters = ({
 	image,
@@ -18,10 +19,19 @@ export const Characters = ({
 		);
 	}
 
+	const pRef = useRef();
+	const [boxSize, setBoxSize] = useState({ width: 0, height: 0 });
+
+	useLayoutEffect(() => {
+		const { width, height } = pRef.current.getBoundingClientRect();
+		setBoxSize({ width, height });
+	}, []);
+
 	return (
 		<div
 			className='card mx-auto rounded-3 border-3 border-warning-subtle'
-			style={{ maxWidth: '400px', backgroundColor: '#F8F9FA' }}
+			style={{ maxWidth: '500px', backgroundColor: '#F8F9FA' }}
+			ref={pRef}
 		>
 			<img className='card-img-top' src={image} alt={name} />
 			<div className='card-body text-center bg-primary-subtle text-emphasis-primary'>
@@ -34,6 +44,8 @@ export const Characters = ({
 			<footer className='card-footer text-muted text-end small footer'>
 				Episodes: {episode?.length}
 			</footer>
+
+			<code>{JSON.stringify(boxSize)}</code>
 		</div>
 	);
 };
