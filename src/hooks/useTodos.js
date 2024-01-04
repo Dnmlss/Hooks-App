@@ -6,14 +6,6 @@ const init = () => {
 	return JSON.parse(localStorage.getItem('todos')) || [];
 };
 
-const todosCount = (todos) => {
-	return todos.length;
-};
-
-const pendingTodosCount = (todos) => {
-	return todos.filter((todo) => !todo.done).length;
-};
-
 // aprobechamos el useEffect para guardar los todos en el localStorage
 export const useTodos = () => {
 	const [todos, dispatch] = useReducer(todoReducer, [], init);
@@ -51,11 +43,11 @@ export const useTodos = () => {
 	};
 
 	return {
-		pendingTodosCount: pendingTodosCount(todos),
+		pendingTodosCount: todos.filter((todo) => !todo.done).length,
 		handleDeleteTodo,
 		handleToggleTodo,
 		handleNewTodo,
-		todosCount: todosCount(todos),
+		todosCount: todos.length,
 		todos,
 		init,
 	};
