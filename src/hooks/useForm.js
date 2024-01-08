@@ -20,7 +20,7 @@ export const useForm = (initialForm = {}) => {
 	return {
 		// desestructuramos el formState, para poder utilizar todas las propiedades en el Hook
 		...formState,
-		formState,
+		setFormState,
 		onInputChange,
 		onResetForm,
 	};

@@ -6,10 +6,10 @@ const init = () => {
 	return JSON.parse(localStorage.getItem('todos')) || [];
 };
 
-// aprobechamos el useEffect para guardar los todos en el localStorage
 export const useTodos = () => {
 	const [todos, dispatch] = useReducer(todoReducer, [], init);
 
+	// aprobechamos el useEffect para guardar los todos en el localStorage
 	useEffect(() => {
 		localStorage.setItem('todos', JSON.stringify(todos));
 	}, [todos]);
